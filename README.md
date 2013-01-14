@@ -1,6 +1,6 @@
 ## All
 
-Using <http://ruby.taobao.org/> source
+<del>Using <http://ruby.taobao.org/> source</del>
 
 ## On Windows 8
 
@@ -31,23 +31,28 @@ Using <http://ruby.taobao.org/> source
 
 ## Deploy Production
 
+5.0 `sudo apt-get install libmysqlclient-dev`
+
 5.1 `bundle install`
 
-5.2 `rake db:setup RAILS_ENV="production"`
+5.2 mysql> `grant all on *.* to elf@localhost identified by "elf";`
 
-5.3 Add a Admin User
+5.3 `rake db:setup RAILS_ENV="production"`
+
+5.4 Add a Admin User
 
 	rails console production
 	User.create(name: 'dave', password: 'secret', password_confirmation: 'secret')
 
-5.4 `bundle exec rake assets:precompile`
+5.5 `bundle exec rake assets:precompile`
 
-5.5 If you are precompiling your assets locally, you can use bundle install --without assets on the server to avoid installing the assets gems (the gems in the assets group in the Gemfile).
+5.6 If you are precompiling your assets locally, you can use bundle install --without assets on the server to avoid installing the assets gems (the gems in the assets group in the Gemfile).
 
 ## Deploy on Apache
 
 6.1 Using passenger
 
+	gem install passenger
 	passenger-install-apache2-module
  
 6.2 /etc/apache2/apache2.conf
@@ -71,6 +76,10 @@ Using <http://ruby.taobao.org/> source
 
 	127.0.0.1  depot.elff1.com
 
-6.4 Restart application
+6.4 Restart Apache
+
+	sudo /etc/init.d/apache2 restart
+
+6.5 Restart application
 
 	touch tmp/restart.txt
